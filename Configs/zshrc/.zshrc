@@ -105,3 +105,23 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
+
+# bun completions
+[ -s "/home/nexplore-jjspscl/.bun/_bun" ] && source "/home/nexplore-jjspscl/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$PATH:/mnt/c/Users/$USER/AppData/Local/Android/Sdk/platform-tools"
+
+export ANDROID_SDK_ROOT="$HOME/android-wsl"
+export ANDROID_HOME="$ANDROID_SDK_ROOT"
+export PATH="$HOME/android-wsl/platform-tools:$PATH"
+eval "$(/home/nexplore-jjspscl/.local/bin/mise activate zsh)"
+
+# opencode
+export PATH=/home/nexplore-jjspscl/.opencode/bin:$PATH
+
+# OpenClaw Completion
+source "/home/nexplore-jjspscl/.openclaw/completions/openclaw.zsh"
+export VIMRUNTIME="$HOME/.local/nvim/share/nvim/runtime"
