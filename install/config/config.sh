@@ -4,3 +4,6 @@ cp -R ~/.local/share/omarchy/config/* ~/.config/
 
 # Use default bashrc from Omarchy
 cp ~/.local/share/omarchy/default/bashrc ~/.bashrc
+
+# Install tmux defaults
+cp ~/.local/share/omarchy/config/tmux/tmux.conf ~/.tmux.conf

@@ -7,5 +7,10 @@ source ~/.local/share/omarchy/default/bash/rc
 
 # Add your own exports, aliases, and functions here.
 #
-# Make an alias for invoking commands you use constantly
-# alias p='python'
+# JP profile defaults (ported from https://github.com/jjspscl/.dotfiles)
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$VOLTA_HOME/bin:$PATH"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export KUBE_EDITOR="nvim"
+
+# Keep command habits consistent across environments
+alias vim="nvim"
