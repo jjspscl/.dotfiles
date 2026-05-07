@@ -85,6 +85,12 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 --
 
+-- Ensure Go and GOPATH/bin are visible to Mason and other plugins
+local home = os.getenv 'HOME' or ''
+vim.env.GOROOT = home .. '/.local/go'
+vim.env.GOPATH = home .. '/go'
+vim.env.PATH = home .. '/.local/go/bin:' .. home .. '/go/bin:' .. vim.env.PATH
+
 vim.opt.termguicolors = true
 vim.cmd [[
   augroup TransparentBackground
@@ -186,6 +192,14 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror message' })
+
+-- Copy current file path to clipboard
+vim.keymap.set('n', '<leader>cp', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path)
+end, { desc = '[C]opy file [P]ath' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -692,11 +706,11 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- TypeScript / JavaScript
-        -- tsserver is blocked from supabase/functions/** — denols handles those files
-        tsserver = {
+        -- ts_ls is blocked from supabase/functions/** — denols handles those files
+        ts_ls = {
           root_dir = function(fname)
             local util = require 'lspconfig.util'
-            -- Don't attach tsserver inside supabase/functions
+            -- Don't attach ts_ls inside supabase/functions
             if fname:match 'supabase/functions' then
               return nil
             end
@@ -1082,7 +1096,16 @@ require('lazy').setup({
       require('mini.surround').setup()
 
       -- Toggle comments with gc (normal) and gc (visual)
-      require('mini.comment').setup()
+      -- Uses ts-context-commentstring for JSX/TSX context-aware comments
+      require('mini.comment').setup {
+        options = {
+          custom_commentstring = function()
+            local ok, parser = pcall(vim.treesitter.get_parser, 0)
+            if ok and parser then parser:parse() end
+            return require('ts_context_commentstring.internal').calculate_commentstring()
+          end,
+        },
+      }
 
       -- Auto-pairs for brackets, quotes, etc.
       require('mini.pairs').setup()
@@ -1106,6 +1129,25 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      require('ts_context_commentstring').setup {
+        enable_autocmd = false,
+      }
+
+      -- Global override so any commenting plugin (mini.comment, native gc, etc.)
+      -- picks up the correct JSX/TSX commentstring automatically.
+      local get_option = vim.filetype.get_option
+      vim.filetype.get_option = function(filetype, option)
+        return option == 'commentstring'
+            and require('ts_context_commentstring.internal').calculate_commentstring()
+          or get_option(filetype, option)
+      end
+    end,
+  },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',

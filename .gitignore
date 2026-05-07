@@ -1,0 +1,7 @@
+# Secrets — never commit real token files
+.zshrc.secrets
+**/\.zshrc.secrets
+
+# Build artifacts / binaries
+*.tar.gz
+*.zip

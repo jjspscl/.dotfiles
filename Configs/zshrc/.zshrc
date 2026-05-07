@@ -1,6 +1,17 @@
+# Auto-attach to tmux session
+if command -v tmux &>/dev/null && [[ -z "$TMUX" && -z "$VSCODE_PID" && -z "$INTELLIJ_ENVIRONMENT_READER" ]]; then
+  if tmux has-session -t 0 2>/dev/null; then
+    exec tmux attach-session -t 0
+  else
+    exec tmux new-session -s 0
+  fi
+fi
+
 # If you come from bash you might have to change your $PATH.
 export VOLTA_HOME="$HOME/.volta"
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$VOLTA_HOME/bin:$HOME/.cargo/bin:$PATH
+export GOROOT="$HOME/.local/go"
+export GOPATH="$HOME/go"
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$VOLTA_HOME/bin:$HOME/.cargo/bin:$GOROOT/bin:$GOPATH/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -10,7 +21,7 @@ export KUBE_EDITOR="nvim"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME=""  # Using Starship prompt instead
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -85,11 +96,11 @@ export PATH="$HOME/.local/nvim/bin:$PATH"
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -107,6 +118,10 @@ export PATH="$HOME/.local/nvim/bin:$PATH"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
 alias projs="cd /home/jjspscl/projects/cimic"
+alias fd="fdfind"
+alias lg="lazygit"
+alias oc="opencode"
+alias ocw="openclaw"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -129,3 +144,19 @@ if [ -f "$HOME/.openclaw/completions/openclaw.zsh" ]; then
   source "$HOME/.openclaw/completions/openclaw.zsh"
 fi
 export VIMRUNTIME="$HOME/.local/nvim/share/nvim/runtime"
+
+# MCP server API keys (used by opencode.json via {env:} interpolation)
+# Loaded from a local-only file — never commit real tokens
+[[ -f ~/.zshrc.secrets ]] && source ~/.zshrc.secrets
+
+# Starship prompt
+eval "$(starship init zsh 2>/dev/null)"
+
+# Playwright MCP Bridge extension token (WSL2 → Windows browser)
+# Loaded from ~/.zshrc.secrets
+
+# opencode
+export PATH=/home/jjspscl/.opencode/bin:$PATH
+
+# VS Code (Windows) in WSL
+export PATH="$PATH:/mnt/c/Users/jpascual/AppData/Local/Programs/Microsoft VS Code/bin"

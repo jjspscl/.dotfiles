@@ -1,0 +1,140 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+# Kanagawa Dragon palette
+# ─────────────────────────────────────
+# sumiInk3     #1F1F28   (bg)
+# sumiInk4     #2A2A37   (bg lighter)
+# fujiWhite    #DCD7BA   (fg / text)
+# oldWhite     #C8C093   (accent text)
+# crystalBlue  #7E9CD8   (primary)
+# oniViolet    #957FB8   (secondary)
+# autumnGreen  #76946A   (success)
+# autumnRed    #C34043   (error)
+# boatYellow2  #C0A36E   (warning / numbers)
+# springViolet1 #938AA9  (muted)
+# waveBlue2    #2D4F67   (active border)
+# muted        #727169   (comments)
+
+format = """
+[╭─](fg:#2A2A37)\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$python\
+$golang\
+$docker_context\
+$package\
+$fill\
+$cmd_duration\
+$time\
+$line_break\
+[╰─](fg:#2A2A37)\
+$character"""
+
+# Disable default newline
+add_newline = false
+
+palette = "kanagawa"
+
+[palettes.kanagawa]
+ink = "#DCD7BA"
+muted = "#727169"
+fuji = "#DCD7BA"
+old_white = "#C8C093"
+sumi3 = "#1F1F28"
+sumi4 = "#2A2A37"
+wave_blue = "#2D4F67"
+green = "#76946A"
+red = "#C34043"
+yellow = "#C0A36E"
+blue = "#7E9CD8"
+violet = "#957FB8"
+spring = "#938AA9"
+
+[fill]
+symbol = " "
+
+[character]
+success_symbol = "[❯](bold blue)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+[directory]
+format = "[ $path]($style)[$read_only]($read_only_style) "
+style = "bold blue"
+read_only = " 󰌾"
+read_only_style = "red"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+"~" = " "
+
+[git_branch]
+format = "on [$symbol$branch(:$remote_branch)]($style) "
+symbol = " "
+style = "bold violet"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold yellow"
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "*${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[nodejs]
+format = "via [$symbol($version)]($style) "
+symbol = "󰎙 "
+style = "bold green"
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+
+[rust]
+format = "via [$symbol($version)]($style) "
+symbol = "🦀 "
+style = "bold red"
+
+[python]
+format = "via [$symbol$pyenv_prefix($version)( \\($virtualenv\\))]($style) "
+symbol = " "
+style = "bold yellow"
+
+[golang]
+format = "via [$symbol($version)]($style) "
+symbol = " "
+style = "bold blue"
+
+[docker_context]
+format = "via [$symbol$context]($style) "
+symbol = " "
+style = "bold blue"
+
+[package]
+format = "is [$symbol$version]($style) "
+symbol = "📦 "
+style = "bold old_white"
+
+[cmd_duration]
+format = "took [$duration]($style) "
+style = "bold yellow"
+min_time = 2_000
+
+[time]
+disabled = false
+format = "[$time]($style) "
+style = "bold spring"
+time_format = "%H:%M"
