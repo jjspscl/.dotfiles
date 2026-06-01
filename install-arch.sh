@@ -5,7 +5,7 @@ info() { printf '\033[0;32m[✓]\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m[!]\033[0m %s\n' "$*"; }
 
 need_pacman=()
-for pkg in git curl tmux starship zsh lazygit opencode rust; do
+for pkg in git curl tmux starship lazygit opencode rust; do
   pacman -Q "$pkg" >/dev/null 2>&1 || need_pacman+=("$pkg")
 done
 
@@ -30,15 +30,6 @@ else
   info "TPM already installed"
 fi
 
-if [ -d "$HOME/.oh-my-zsh" ]; then
-  plugin_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-  if [ ! -d "$plugin_dir" ]; then
-    info "Installing zsh-autosuggestions"
-    git clone https://github.com/zsh-users/zsh-autosuggestions "$plugin_dir"
-  fi
-else
-  warn "Oh My Zsh not found; install it manually if you want the zshrc OMZ block enabled."
-fi
 
-info "Ready. From this repo, deploy selected groups with: tuckr set tmux starship opencode zshrc"
+info "Ready. From this repo, deploy selected groups with: tuckr set tmux starship opencode bashrc"
 info "nvim is intentionally left to Omarchy/omarchy-nvim and is not managed here."

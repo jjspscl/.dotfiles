@@ -13,7 +13,7 @@ The `leighton-pc` branch is a Tuckr-managed WSL-style setup. This `omarchy` bran
 | tmux | aligned | `Ctrl-s` prefix, vi pane nav, repeatable window nav, current-directory splits, OSC52/passthrough clipboard, TPM, `tmux-sm`, Kanagawa minimal status |
 | Starship | aligned | Kanagawa Dragon palette and richer prompt copied from `leighton-pc` |
 | OpenCode | aligned | Agent config, TUI config, Kanagawa transparent theme, and Tamagui skill |
-| zsh | aligned, optional | Arch/Omarchy-safe `.zshrc`; WSL paths removed; tmux auto-attach disabled unless explicitly enabled |
+| bash | aligned | Omarchy-native `.bashrc`; ports the useful portable shell setup to JP's current shell with WSL paths removed; tmux auto-attach disabled unless explicitly enabled |
 | nvim | intentionally not aligned | Omarchy's `omarchy-nvim` / system Neovim remains the source of truth |
 
 Do not merge `leighton-pc` directly into this branch: it deletes a large amount of Omarchy structure (`bin/`, `install/`, `config/`, `default/`, `themes/`, migrations, etc.). Cherry-pick/port individual config ideas instead.
@@ -37,10 +37,9 @@ Tuckr groups are also provided for direct dotfile deployment:
 Configs/tmux/.tmux.conf
 Configs/starship/.config/starship.toml
 Configs/opencode/.config/opencode/...
-Configs/zshrc/.zshrc
-Configs/zshrc/.zshrc.secrets.example
+Configs/bashrc/.bashrc
+Configs/bashrc/.bashrc.secrets.example
 Hooks/tmux/pre.sh
-Hooks/zshrc/pre.sh
 ```
 
 ## Install / verify on Omarchy or Arch
@@ -54,7 +53,7 @@ Install core dependencies and Tuckr:
 Or manually:
 
 ```bash
-sudo pacman -S --needed git curl tmux starship zsh lazygit opencode rust
+sudo pacman -S --needed git curl tmux starship lazygit opencode rust
 cargo install tuckr
 ```
 
@@ -79,7 +78,7 @@ From this repo:
 ```bash
 cd ~/.local/share/omarchy
 
-tuckr set tmux starship opencode zshrc
+tuckr set tmux starship opencode bashrc
 ```
 
 To deploy selectively:
@@ -88,7 +87,7 @@ To deploy selectively:
 tuckr set tmux
 tuckr set starship
 tuckr set opencode
-tuckr set zshrc
+tuckr set bashrc
 ```
 
 To inspect status:
@@ -124,20 +123,21 @@ First run inside tmux:
 Ctrl-s + I
 ```
 
-## zsh notes
+## bash notes
 
-The zsh config is optional. It is Arch/Omarchy-safe and removes the WSL-specific pieces from `leighton-pc`.
+This branch keeps bash as JP's Omarchy login shell and ports the useful portable shell setup. The managed `.bashrc` sources Omarchy's default bash config first, then applies JP-specific additions.
 
 It includes:
 
+- Omarchy default bash aliases/functions
 - `vim=nvim`
 - `lg=lazygit`
 - `oc=opencode`
 - mise activation when available
 - Bun/Volta/Go path setup
-- OpenClaw completions when present
+- OpenClaw bash completions when present
 - Starship prompt when available
-- local-only secrets loaded from `~/.zshrc.secrets`
+- local-only secrets loaded from `~/.bashrc.secrets`
 
 Tmux auto-attach is disabled by default. Enable it only if wanted:
 
@@ -145,7 +145,7 @@ Tmux auto-attach is disabled by default. Enable it only if wanted:
 export JP_TMUX_AUTO_ATTACH=1
 ```
 
-Then new interactive zsh shells will attach/create tmux session `0` when not already inside tmux.
+Then new interactive bash shells will attach/create tmux session `0` when not already inside tmux.
 
 ## OpenCode notes
 
@@ -159,7 +159,7 @@ OpenCode is configured with:
 - Kanagawa transparent TUI theme
 - Tamagui skill
 
-Local secrets/API keys should live outside git, usually in shell env or `~/.zshrc.secrets`.
+Local secrets/API keys should live outside git, usually in shell env or `~/.bashrc.secrets`.
 
 ## nvim policy
 
