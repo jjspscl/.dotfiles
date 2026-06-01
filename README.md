@@ -1,9 +1,172 @@
-# Omarchy
+# JP Omarchy Dotfiles
 
-Omarchy is a beautiful, modern & opinionated Linux distribution by DHH.
+This branch is JP's Omarchy/Arch setup, based on Omarchy and aligned with the useful parts of the `leighton-pc` dotfiles branch.
 
-Read more at [omarchy.org](https://omarchy.org).
+Omarchy itself is a beautiful, modern & opinionated Linux distribution by DHH. Read more at [omarchy.org](https://omarchy.org).
+
+## What is aligned from `leighton-pc`
+
+The `leighton-pc` branch is a Tuckr-managed WSL-style setup. This `omarchy` branch keeps the Omarchy/Arch structure intact and ports only the portable pieces:
+
+| Area | Status | Notes |
+| --- | --- | --- |
+| tmux | aligned | `Ctrl-s` prefix, vi pane nav, repeatable window nav, current-directory splits, OSC52/passthrough clipboard, TPM, `tmux-sm`, Kanagawa minimal status |
+| Starship | aligned | Kanagawa Dragon palette and richer prompt copied from `leighton-pc` |
+| OpenCode | aligned | Agent config, TUI config, Kanagawa transparent theme, and Tamagui skill |
+| zsh | aligned, optional | Arch/Omarchy-safe `.zshrc`; WSL paths removed; tmux auto-attach disabled unless explicitly enabled |
+| nvim | intentionally not aligned | Omarchy's `omarchy-nvim` / system Neovim remains the source of truth |
+
+Do not merge `leighton-pc` directly into this branch: it deletes a large amount of Omarchy structure (`bin/`, `install/`, `config/`, `default/`, `themes/`, migrations, etc.). Cherry-pick/port individual config ideas instead.
+
+## Repository layout
+
+Omarchy-native config paths remain in place:
+
+```text
+config/tmux/tmux.conf
+config/starship.toml
+config/opencode/opencode.json
+config/opencode/tui.json
+config/opencode/themes/kanagawa-transparent.json
+config/opencode/skills/tamagui.md
+```
+
+Tuckr groups are also provided for direct dotfile deployment:
+
+```text
+Configs/tmux/.tmux.conf
+Configs/starship/.config/starship.toml
+Configs/opencode/.config/opencode/...
+Configs/zshrc/.zshrc
+Configs/zshrc/.zshrc.secrets.example
+Hooks/tmux/pre.sh
+Hooks/zshrc/pre.sh
+```
+
+## Install / verify on Omarchy or Arch
+
+Install core dependencies and Tuckr:
+
+```bash
+./install-arch.sh
+```
+
+Or manually:
+
+```bash
+sudo pacman -S --needed git curl tmux starship zsh lazygit opencode rust
+cargo install tuckr
+```
+
+TPM is required for tmux plugins:
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+Tuckr is installed at:
+
+```text
+~/.cargo/bin/tuckr
+```
+
+Make sure `~/.cargo/bin` is on `PATH`.
+
+## Deploy with Tuckr
+
+From this repo:
+
+```bash
+cd ~/.local/share/omarchy
+
+tuckr set tmux starship opencode zshrc
+```
+
+To deploy selectively:
+
+```bash
+tuckr set tmux
+tuckr set starship
+tuckr set opencode
+tuckr set zshrc
+```
+
+To inspect status:
+
+```bash
+tuckr status
+```
+
+## tmux notes
+
+Prefix:
+
+```text
+Ctrl-s
+```
+
+Key bindings:
+
+| Key | Action |
+| --- | --- |
+| `prefix + r` | reload `~/.tmux.conf` |
+| `prefix + h/j/k/l` | move between panes |
+| `prefix + n/p` | next/previous window, repeatable |
+| `prefix + "` | vertical split in current directory |
+| `prefix + %` | horizontal split in current directory |
+| `prefix + c` | new window in current directory |
+| `prefix + S` | tmux session manager (`tmux-sm`) |
+| `prefix + I` | install TPM plugins |
+
+First run inside tmux:
+
+```text
+Ctrl-s + I
+```
+
+## zsh notes
+
+The zsh config is optional. It is Arch/Omarchy-safe and removes the WSL-specific pieces from `leighton-pc`.
+
+It includes:
+
+- `vim=nvim`
+- `lg=lazygit`
+- `oc=opencode`
+- mise activation when available
+- Bun/Volta/Go path setup
+- OpenClaw completions when present
+- Starship prompt when available
+- local-only secrets loaded from `~/.zshrc.secrets`
+
+Tmux auto-attach is disabled by default. Enable it only if wanted:
+
+```bash
+export JP_TMUX_AUTO_ATTACH=1
+```
+
+Then new interactive zsh shells will attach/create tmux session `0` when not already inside tmux.
+
+## OpenCode notes
+
+OpenCode is configured with:
+
+- `build` default agent
+- `plan`
+- `tester`
+- `product-manager`
+- `code-reviewer`
+- Kanagawa transparent TUI theme
+- Tamagui skill
+
+Local secrets/API keys should live outside git, usually in shell env or `~/.zshrc.secrets`.
+
+## nvim policy
+
+This branch intentionally does not deploy `leighton-pc`'s Neovim config.
+
+Reason: this machine uses Omarchy/Arch Neovim (`omarchy-nvim` and system `nvim`), and replacing it with the WSL Kickstart setup could conflict with Omarchy conventions.
 
 ## License
 
-Omarchy is released under the [MIT License](https://opensource.org/licenses/MIT).
+Omarchy is released under the [MIT License](https://opensource.org/licenses/MIT). JP-specific dotfile additions are personal-use configuration.
