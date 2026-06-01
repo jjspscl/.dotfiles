@@ -13,7 +13,7 @@ The `leighton-pc` branch is a Tuckr-managed WSL-style setup. This `omarchy` bran
 | tmux | aligned | `Ctrl-s` prefix, vi pane nav, repeatable window nav, current-directory splits, OSC52/passthrough clipboard, TPM, `tmux-sm`, Kanagawa minimal status |
 | Starship | aligned | Kanagawa Dragon palette and richer prompt copied from `leighton-pc` |
 | OpenCode | aligned | Agent config, TUI config, Kanagawa transparent theme, and Tamagui skill |
-| bash | aligned | Omarchy-native `.bashrc`; ports the useful portable shell setup to JP's current shell with WSL paths removed; tmux auto-attach disabled unless explicitly enabled |
+| bash | aligned | Omarchy-native `.bashrc`; ports the useful portable shell setup to JP's current shell with WSL paths removed; tmux auto-attach enabled for real terminals unless explicitly disabled |
 | nvim | intentionally not aligned | Omarchy's `omarchy-nvim` / system Neovim remains the source of truth |
 
 Do not merge `leighton-pc` directly into this branch: it deletes a large amount of Omarchy structure (`bin/`, `install/`, `config/`, `default/`, `themes/`, migrations, etc.). Cherry-pick/port individual config ideas instead.
@@ -139,13 +139,13 @@ It includes:
 - Starship prompt when available
 - local-only secrets loaded from `~/.bashrc.secrets`
 
-Tmux auto-attach is disabled by default. Enable it only if wanted:
+Tmux auto-attach is enabled by default for real interactive terminal sessions. Disable it only if wanted:
 
 ```bash
-export JP_TMUX_AUTO_ATTACH=1
+export JP_TMUX_AUTO_ATTACH=0
 ```
 
-Then new interactive bash shells will attach/create tmux session `0` when not already inside tmux.
+New interactive bash terminals will attach/create tmux session `0` when not already inside tmux. Non-TTY shells and editor-integrated shells are skipped.
 
 ## OpenCode notes
 

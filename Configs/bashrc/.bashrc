@@ -42,8 +42,10 @@ path_prepend "$GOPATH/bin"
 path_prepend "/usr/local/bin"
 export PATH
 
-# Optional tmux auto-attach. Enable with: export JP_TMUX_AUTO_ATTACH=1
-if [[ "${JP_TMUX_AUTO_ATTACH:-}" == "1" ]] \
+# Auto-attach to tmux for real interactive terminal sessions.
+# Disable per shell with: export JP_TMUX_AUTO_ATTACH=0
+if [[ "${JP_TMUX_AUTO_ATTACH:-1}" == "1" ]] \
+  && [[ -t 0 && -t 1 ]] \
   && command -v tmux >/dev/null 2>&1 \
   && [[ -z "${TMUX:-}" && -z "${VSCODE_PID:-}" && -z "${INTELLIJ_ENVIRONMENT_READER:-}" ]]; then
   if tmux has-session -t 0 2>/dev/null; then
