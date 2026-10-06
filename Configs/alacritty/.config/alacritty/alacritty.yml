@@ -1,0 +1,53 @@
+live_config_reload: true
+
+window:
+  opacity: 0.80
+  padding:
+    x: 10
+    y: 10
+  dynamic_padding: true
+  decorations: none
+  startup_mode: "Maximized"
+
+
+
+font:
+  normal:
+    family: "MesloLGLDZ Nerd Font"
+    style: Regular
+  bold:
+    family: "MesloLGLDZ Nerd Font"
+    style: Bold
+  italic:
+    family: "MesloLGLDZ Nerd Font"
+    style: Italic
+  size: 21
+
+colors:
+  primary:
+    background: '#1F1F28'
+    foreground: '#DCD7BA'
+  cursor:
+    text: '#1F1F28'
+    cursor: '#C8C093'
+  selection:
+    text: '#DCD7BA'
+    background: '#2D4F67'
+  normal:
+    black:   '#1F1F28'
+    red:     '#C34043'
+    green:   '#76946A'
+    yellow:  '#C0A36E'
+    blue:    '#7E9CD8'
+    magenta: '#957FB8'
+    cyan:    '#7FB4CA'
+    white:   '#DCD7BA'
+  bright:
+    black:   '#727169'
+    red:     '#E82424'
+    green:   '#98BB6C'
+    yellow:  '#E6C384'
+    blue:    '#7FB4CA'
+    magenta: '#938AA9'
+    cyan:    '#7AA89F'
+    white:   '#C8C093'

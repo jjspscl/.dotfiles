@@ -1,0 +1,18 @@
+[font]
+size = 12
+
+[font.normal]
+family = "MesloLGLDZNerdFontMono"
+style = "Regular"
+
+[font.bold]
+family = "MesloLGLDZNerdFontMono"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGLDZNerdFontMono"
+style = "Italic"
+
+[font.bold_italic]
+family = "MesloLGLDZNerdFontMono"
+style = "Bold Italic"
