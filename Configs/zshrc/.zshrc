@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$VOLTA_HOME/bin:$PATH
+# Keep Volta on PATH only when configured; avoid an empty PATH segment.
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin${VOLTA_HOME:+:$VOLTA_HOME/bin}:$PATH"
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -78,7 +79,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+# Neovim is installed via Homebrew on macOS; no Linux-only PATH entry is needed.
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

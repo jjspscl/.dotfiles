@@ -1,5 +1,14 @@
 live_config_reload: true
 
+# Open or attach to tmux session 0 in every Alacritty window.
+shell:
+  program: /opt/homebrew/bin/tmux
+  args:
+    - new-session
+    - -A
+    - -s
+    - "0"
+
 window:
   opacity: 0.80
   padding:
