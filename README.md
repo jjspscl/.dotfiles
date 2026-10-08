@@ -13,7 +13,7 @@ Install Meslo LG DZ Nerd Font for this account (the YAML uses it). The TOML uses
 
 ## Zsh and tmux
 
-`Configs/zshrc/.zshrc` mirrors jjspscl's Zsh setup, with the Linux-only Neovim path removed and the optional Volta path guarded. It requires Oh My Zsh and the `zsh-autosuggestions` plugin. `Configs/tmux/.tmux.conf` mirrors jjspscl's tmux settings and TPM plugin list.
+`Configs/zshrc/.zshrc` mirrors jjspscl's Zsh setup, with the Linux-only Neovim path removed and the optional Volta path guarded. It requires Oh My Zsh and the `zsh-autosuggestions` plugin. `Configs/tmux/.tmux.conf` mirrors jjspscl's tmux settings and TPM plugin list. The `projs` shortcut enters `/Users/Shared/jjspscl/projects/growmodo/`, and `oc` launches the OpenCode 2 beta CLI (`opencode2`).
 
 For the growmodo account, back up any existing `~/.zshrc` or `~/.tmux.conf` before linking, then link the tracked configs:
 

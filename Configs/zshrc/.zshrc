@@ -106,3 +106,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
+
+# Project workspace and OpenCode 2 shortcuts
+alias projs="cd /Users/Shared/jjspscl/projects/growmodo/"
+alias oc="opencode2"
