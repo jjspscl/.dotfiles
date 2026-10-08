@@ -35,6 +35,23 @@ test -d "$HOME/.tmux/plugins/tpm" || git clone https://github.com/tmux-plugins/t
 
 The active Alacritty 0.10.1 YAML config launches `/opt/homebrew/bin/tmux new-session -A -s 0`; it creates session `0` if needed or attaches to it otherwise. The TOML file remains the source account's font-only config and is not loaded by Alacritty 0.10.1.
 
+## OpenCode 2
+
+OpenCode 2 beta installs as `opencode2` alongside V1's `opencode`. Install it per-user with:
+
+```sh
+npm install --global --prefix "$HOME/.local" --allow-scripts=@opencode-ai/cli @opencode-ai/cli@beta
+```
+
+The fresh global config is `Configs/opencode/.config/opencode/opencode.json`, containing only the official schema reference—no model, provider, or credentials. Link only this file so runtime/auth data remains outside the repo:
+
+```sh
+mkdir -p "$HOME/.config/opencode"
+ln -s "$HOME/.dotfiles/Configs/opencode/.config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+```
+
+OpenCode 2 reads this same global config path. Connect a provider separately in the `opencode2` TUI with `/connect`; credentials are not stored in dotfiles. If the default service port is occupied, choose a free per-user port with `opencode2 service set port <port>`; this writes `~/.config/opencode/service.json`, which should remain local and untracked.
+
 The `Configs/aerospace/.aerospace.toml` file mirrors jjspscl's AeroSpace workspace bindings. For the growmodo account, link it at the app's home-directory config path:
 
 ```sh
