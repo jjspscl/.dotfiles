@@ -121,7 +121,7 @@ alias projs="cd /home/jjspscl/projects/cimic"
 alias fd="fdfind"
 alias lg="lazygit"
 alias oc="opencode"
-alias ocw="openclaw --profile leighton tui"
+# alias ocw="openclaw"  # removed
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -139,12 +139,7 @@ eval "$(mise activate zsh 2>/dev/null)"
 # opencode
 export PATH=$HOME/.opencode/bin:$PATH
 
-# OpenClaw Completion
-if [ -f "$HOME/.openclaw-leighton/completions/openclaw.zsh" ]; then
-  source "$HOME/.openclaw-leighton/completions/openclaw.zsh"
-elif [ -f "$HOME/.openclaw/completions/openclaw.zsh" ]; then
-  source "$HOME/.openclaw/completions/openclaw.zsh"
-fi
+# OpenClaw removed
 export VIMRUNTIME="$HOME/.local/nvim/share/nvim/runtime"
 
 # MCP server API keys (used by opencode.json via {env:} interpolation)

@@ -14,6 +14,9 @@ return {
     { '<C-b>', ':Neotree toggle<CR>', desc = 'Toggle NeoTree (VS Code style)', silent = true },
   },
   opts = {
+    window = {
+      position = 'right',
+    },
     filesystem = {
       filtered_items = {
         visible = true, -- show hidden files dimmed

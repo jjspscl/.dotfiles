@@ -1,9 +1,280 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "small_model": "uiui/gpt-5.6-luna",
+  "permission": "allow",
+  "provider": {
+    "uiui": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "UIUI API",
+      "options": {
+        "baseURL": "https://api.uiuihao.com/v1",
+        "apiKey": "{file:~/.local/share/opencode/uiui-key}"
+      },
+      "models": {
+        "glm-5.2": {
+          "name": "GLM 5.2 (UIUI)",
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna (UIUI)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gpt-5.6-terra": {
+          "name": "GPT-5.6 Terra (UIUI)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (UIUI)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "kimi-k3": {
+          "name": "Kimi K3 (UIUI)",
+          "reasoning": true,
+          "interleaved": { "field": "reasoning_content" },
+          "limit": { "context": 256000, "output": 8192 }
+        },
+        "qwen3-max": {
+          "name": "Qwen 3 Max (UIUI)",
+          "reasoning": true,
+          "attachment": true,
+          "interleaved": { "field": "reasoning_content" },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 131072 }
+        }
+      }
+    },
+    "uiui-claude": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "UIUI Claude Native",
+      "options": {
+        "baseURL": "https://api.uiuihao.com/v1",
+        "apiKey": "{file:~/.local/share/opencode/uiui-key}"
+      },
+      "models": {
+        "claude-fable-5": {
+          "name": "Claude Fable 5 (UIUI Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-5": {
+          "name": "Claude Opus 5 (UIUI Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 128000 }
+        }
+      }
+    },
+    "codex": {
+      "npm": "@ai-sdk/openai",
+      "name": "Codex (Private)",
+      "options": {
+        "baseURL": "https://codex-api.jjspscl.com/v1",
+        "apiKey": "{file:~/.local/share/opencode/codex-key}"
+      },
+      "models": {
+        "gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (codex)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1050000, "output": 128000 }
+        },
+        "gpt-5.6-terra": {
+          "name": "GPT-5.6 Terra (codex)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1050000, "output": 128000 }
+        },
+        "gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna (codex)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1050000, "output": 128000 }
+        },
+        "gpt-6-luna": {
+          "name": "GPT-6 Luna (codex)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1050000, "output": 128000 }
+        },
+        "gpt-6-astra": {
+          "name": "GPT-6 Astra (codex)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1050000, "output": 128000 }
+        }
+      }
+    },
+    "openlux": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenLux",
+      "options": {
+        "baseURL": "https://api.openlux.ai/v1",
+        "apiKey": "{file:~/.local/share/opencode/openlux-key}"
+      },
+      "models": {
+        "gpt-5.5-pro": {
+          "name": "GPT-5.5 Pro (openlux)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "name": "DeepSeek V4.1 Flash (openlux)"
+        },
+        "glm-5.2": {
+          "name": "GLM 5.2 (openlux)",
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna (openlux)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gpt-5.6-terra": {
+          "name": "GPT-5.6 Terra (openlux)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (openlux)",
+          "attachment": true,
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "kimi-k3": {
+          "name": "Kimi K3 (openlux)",
+          "reasoning": true,
+          "attachment": true,
+          "interleaved": { "field": "reasoning_content" },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 256000, "output": 8192 }
+        },
+        "qwen3.8-max": {
+          "name": "Qwen 3.8 Max (openlux)",
+          "reasoning": true,
+          "attachment": true,
+          "interleaved": { "field": "reasoning_content" },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 131072 }
+        }
+      }
+    },
+    "openlux-claude": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "OpenLux Claude Native",
+      "options": {
+        "baseURL": "https://api.openlux.ai/v1",
+        "apiKey": "{file:~/.local/share/opencode/openlux-key}"
+      },
+      "models": {
+        "claude-fable-5": {
+          "name": "Claude Fable 5 (openlux Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-4-7": {
+          "name": "Claude Opus 4.7 (openlux Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "claude-opus-5": {
+          "name": "Claude Opus 5 (openlux Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-5-5": {
+          "name": "Claude Opus 5.5 (openlux Native)",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          },
+          "limit": { "context": 1000000, "output": 128000 }
+        }
+      }
+    }
+  },
+  "instructions": ["~/.config/opencode/search-preferences.md"],
   "mcp": {
     "engram": {
       "type": "local",
-      "command": ["engram", "mcp"],
+      "command": ["/home/jjspscl/.local/bin/engram", "mcp"],
       "environment": {
         "ENGRAM_DISABLE_CLOUD_SYNC": "1",
         "ENGRAM_DISABLE_TELEMETRY": "1",
@@ -25,6 +296,30 @@
         "TOKEN_SAVIOR_DISABLE_ANTHROPIC": "1"
       },
       "enabled": true
+    },
+    "brave-search": {
+      "type": "local",
+      "command": [
+        "brave-search-mcp-server",
+        "--transport",
+        "stdio",
+        "--disabled-tools",
+        "brave_llm_context",
+        "brave_summarizer"
+      ],
+      "environment": {
+        "BRAVE_API_KEY": "{file:~/.local/share/opencode/brave-key}"
+      },
+      "enabled": true
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa",
+      "headers": {
+        "x-api-key": "{file:~/.local/share/opencode/exa-key}"
+      },
+      "enabled": true
     }
-  }
+  },
+  "plugins": []
 }
