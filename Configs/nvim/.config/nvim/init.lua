@@ -98,7 +98,6 @@ vim.cmd [[
     autocmd ColorScheme * highlight Normal     guibg=NONE ctermbg=NONE
     autocmd ColorScheme * highlight NormalNC   guibg=NONE ctermbg=NONE
     autocmd ColorScheme * highlight NonText    guibg=NONE ctermbg=NONE
-    autocmd ColorScheme * highlight NormalFloat guibg=NONE
   augroup END
 ]]
 
@@ -167,7 +166,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -457,9 +456,28 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      local function tree_path_display(_, path)
+        local normalized = path:gsub('\\', '/')
+        local parts = vim.split(normalized, '/', { plain = true, trimempty = true })
+
+        if #parts <= 1 then
+          return normalized
+        end
+
+        local filename = table.remove(parts)
+        local directory = table.concat(parts, '/')
+
+        return string.format('%s└─ %s  %s/', string.rep('  ', #parts), filename, directory)
+      end
+
+      local function find_files_as_tree(opts)
+        opts = vim.tbl_extend('force', opts or {}, { path_display = tree_path_display })
+        builtin.find_files(opts)
+      end
+
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sf', find_files_as_tree, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -488,11 +506,11 @@ require('lazy').setup({
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
+        find_files_as_tree { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
 
       -- VS Code style: Ctrl-p to find files
-      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files (VS Code style)' })
+      vim.keymap.set('n', '<C-p>', find_files_as_tree, { desc = 'Find files (VS Code style)' })
     end,
   },
 
@@ -587,7 +605,7 @@ require('lazy').setup({
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('grd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -1054,9 +1072,9 @@ require('lazy').setup({
               ui = {
                 bg_gutter = 'none',
                 float = {
-                  bg = 'none',
-                  bg_border = '#2D4F67',
-                  fg_border = '#2D4F67',
+                  bg = '#26252B',
+                  bg_border = '#26252B',
+                  fg_border = '#7E9CD8',
                 },
               },
             },
@@ -1064,13 +1082,36 @@ require('lazy').setup({
         },
       }
 
-      vim.cmd.colorscheme 'kanagawa-dragon'
+      local function apply_custom_highlights()
+        -- Keep theme and Copilot overrides consistent after :colorscheme changes.
+        -- Readability: brighter muted text, tinted (not transparent) panels.
+        -- Same palette as Configs/opencode kanagawa-transparent and WezTerm.
+        vim.api.nvim_set_hl(0, 'Comment', { fg = '#9E9B93', italic = false })
+        vim.api.nvim_set_hl(0, 'LineNr', { fg = '#8A877F' })
+        vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#E6C384', bold = true })
+        vim.api.nvim_set_hl(0, 'NonText', { fg = '#625E5A' })
+        vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#625E5A' })
+        vim.api.nvim_set_hl(0, 'NormalFloat', { fg = '#C5C9C5', bg = '#26252B' })
+        vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#7E9CD8', bg = '#26252B' })
+        vim.api.nvim_set_hl(0, 'FloatTitle', { fg = '#E6C384', bg = '#26252B', bold = true })
+        vim.api.nvim_set_hl(0, 'Pmenu', { fg = '#C5C9C5', bg = '#26252B' })
+        vim.api.nvim_set_hl(0, 'PmenuSel', { fg = '#E6E4DC', bg = '#3B3A4A', bold = true })
+        vim.api.nvim_set_hl(0, 'StatusLine', { fg = '#C5C9C5', bg = '#26252B' })
+        vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#9E9B93', bg = '#1D1C21' })
+        vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2F2E3A' })
+        vim.api.nvim_set_hl(0, 'Visual', { bg = '#2D4F67' })
+        vim.api.nvim_set_hl(0, 'Search', { fg = '#181616', bg = '#E6C384' })
+        vim.api.nvim_set_hl(0, 'IncSearch', { fg = '#181616', bg = '#E46876' })
+        vim.api.nvim_set_hl(0, 'CopilotSuggestion', { fg = '#727169', italic = true })
+        vim.api.nvim_set_hl(0, 'CopilotAnnotation', { fg = '#7E9CD8' })
+      end
 
-      -- Small highlight tweaks so tmux/alacritty/opencode feel like one palette.
-      vim.api.nvim_set_hl(0, 'Comment', { italic = false })
-      vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#2D4F67', bg = 'NONE' })
-      vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2A2A37' })
-      vim.api.nvim_set_hl(0, 'Visual', { bg = '#223249' })
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = vim.api.nvim_create_augroup('custom-highlights', { clear = true }),
+        callback = apply_custom_highlights,
+      })
+      vim.cmd.colorscheme 'kanagawa-dragon'
+      apply_custom_highlights()
     end,
   },
 
@@ -1216,8 +1257,9 @@ require('lazy').setup({
         -- suggestion window (virtual text)
         suggestion = {
           enabled = true, -- show inline suggestions
-          auto_trigger = false, -- only trigger via keymap
-          keymap = { accept = '<C-CR>' },
+          auto_trigger = true, -- show suggestions automatically in Insert mode
+          -- Terminal emulators usually cannot distinguish Ctrl+Enter from Enter.
+          keymap = { accept = '<C-l>' },
         },
         -- optional floating panel
         panel = { enabled = true },

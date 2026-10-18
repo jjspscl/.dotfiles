@@ -134,6 +134,7 @@ create_config_dirs() {
   mkdir -p ~/.config/nvim
   mkdir -p ~/.config/opencode/themes
   mkdir -p ~/.config/opencode/skills
+  mkdir -p ~/.config/wezterm
 }
 
 # ─── Deploy dotfiles ─────────────────────────────────────────────────
@@ -144,6 +145,13 @@ deploy_dotfiles() {
     info "Dotfiles deployed! Run 'tuckr status' to verify."
   else
     error "Tuckr not found — skipping dotfile deployment"
+  fi
+}
+
+# ─── WezTerm (Windows host) ──────────────────────────────────────────
+sync_wezterm() {
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    "$(dirname "${BASH_SOURCE[0]}")/scripts/sync-wezterm.sh" || warn "WezTerm sync failed"
   fi
 }
 
@@ -178,6 +186,7 @@ main() {
   install_ohmyzsh
   create_config_dirs
   deploy_dotfiles
+  sync_wezterm
   print_summary
 }
 

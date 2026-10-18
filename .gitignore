@@ -5,3 +5,6 @@
 # Build artifacts / binaries
 *.tar.gz
 *.zip
+
+# Stray tool output
+.playwright-mcp/

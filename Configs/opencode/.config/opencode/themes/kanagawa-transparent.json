@@ -1,77 +1,212 @@
 {
   "$schema": "https://opencode.ai/theme.json",
-  "defs": {
-    "ink": "#DCD7BA",
-    "muted": "#727169",
-    "fujiWhite": "#DCD7BA",
-    "oldWhite": "#C8C093",
-    "sumiInk3": "#1F1F28",
-    "sumiInk4": "#2A2A37",
-    "waveBlue1": "#223249",
-    "waveBlue2": "#2D4F67",
-    "autumnGreen": "#76946A",
-    "autumnRed": "#C34043",
-    "boatYellow2": "#C0A36E",
-    "crystalBlue": "#7E9CD8",
-    "oniViolet": "#957FB8",
-    "springViolet1": "#938AA9"
+  "base": {
+    "categorical": ["blue", "purple", "green", "orange", "red"],
+    "text": {
+      "base": "$hue.neutral.200",
+      "muted": "$hue.neutral.400",
+      "action": {
+        "primary": {
+          "base": "$text.base",
+          "$disabled": "$hue.neutral.500",
+          "$focused": "$hue.neutral.800",
+          "$selected": "$hue.interactive.100"
+        },
+        "secondary": {
+          "base": "$text.muted",
+          "$hovered": "$text.base"
+        },
+        "destructive": {
+          "base": "$hue.neutral.800",
+          "$disabled": "$hue.neutral.500"
+        }
+      },
+      "formfield": {
+        "base": "$hue.neutral.200",
+        "$hovered": "$hue.interactive.100",
+        "$focused": "$hue.interactive.100",
+        "$pressed": "$hue.interactive.100",
+        "$disabled": "$hue.neutral.500",
+        "$selected": "$hue.interactive.100"
+      },
+      "feedback": {
+        "error": { "base": "$hue.red.200" },
+        "warning": { "base": "#E6C384" },
+        "success": { "base": "$hue.green.100" },
+        "info": { "base": "$hue.cyan.100" }
+      }
+    },
+    "background": {
+      "base": "transparent",
+      "raised": {
+        "base": "#26252B",
+        "high": "#302F3A",
+        "max": "#3B3A4A"
+      },
+      "action": {
+        "primary": {
+          "base": "transparent",
+          "$hovered": "$background.raised.high",
+          "$focused": "$hue.interactive.200",
+          "$selected": "$background.raised.base"
+        },
+        "secondary": { "base": "transparent" },
+        "destructive": { "base": "$hue.red.200" }
+      },
+      "formfield": { "base": "$background.raised.base" },
+      "feedback": {
+        "error": { "base": "#2B1D20" },
+        "warning": { "base": "#2A251B" },
+        "success": { "base": "#1E2620" },
+        "info": { "base": "#1C242B" }
+      }
+    },
+    "border": { "base": "#4A4958" },
+    "scrollbar": { "base": "#625E5A" },
+    "diff": {
+      "text": {
+        "added": "$hue.green.100",
+        "removed": "$hue.red.200",
+        "context": "$hue.neutral.400",
+        "hunkHeader": "$hue.interactive.200"
+      },
+      "background": {
+        "added": "#1F2D24",
+        "removed": "#33212A",
+        "context": "transparent"
+      },
+      "highlight": {
+        "added": "#2F4A38",
+        "removed": "#4D2D38"
+      },
+      "lineNumber": {
+        "text": "$hue.neutral.400",
+        "background": {
+          "added": "#1A271F",
+          "removed": "#2B1B23"
+        }
+      }
+    },
+    "syntax": {
+      "comment": "$hue.neutral.400",
+      "keyword": "$hue.accent.100",
+      "function": "$hue.interactive.200",
+      "variable": "$hue.neutral.200",
+      "string": "$hue.green.200",
+      "number": "#E6C384",
+      "type": "$hue.orange.100",
+      "operator": "$hue.cyan.200",
+      "punctuation": "$hue.neutral.300"
+    },
+    "markdown": {
+      "text": "$hue.neutral.200",
+      "heading": "$hue.interactive.100",
+      "link": "$hue.interactive.200",
+      "linkText": "$hue.cyan.100",
+      "code": "$hue.green.200",
+      "blockQuote": "$hue.neutral.400",
+      "emphasis": "$hue.accent.100",
+      "strong": "#E6C384",
+      "horizontalRule": "$hue.neutral.500",
+      "listItem": "$hue.interactive.200",
+      "listEnumeration": "$hue.orange.100",
+      "image": "$hue.interactive.200",
+      "imageText": "$hue.cyan.100",
+      "codeBlock": "$hue.neutral.200"
+    },
+    "@dialog": {
+      "background": {
+        "base": "$background.raised.base",
+        "action": {
+          "primary": {
+            "$hovered": "$background.raised.high"
+          }
+        }
+      }
+    }
   },
-  "theme": {
-    "primary": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "secondary": { "dark": "oniViolet", "light": "oniViolet" },
-    "accent": { "dark": "oldWhite", "light": "boatYellow2" },
-    "error": { "dark": "autumnRed", "light": "autumnRed" },
-    "warning": { "dark": "boatYellow2", "light": "boatYellow2" },
-    "success": { "dark": "autumnGreen", "light": "autumnGreen" },
-    "info": { "dark": "crystalBlue", "light": "waveBlue2" },
-
-    "text": { "dark": "fujiWhite", "light": "sumiInk3" },
-    "textMuted": { "dark": "muted", "light": "springViolet1" },
-
-    "background": { "dark": "none", "light": "none" },
-    "backgroundPanel": { "dark": "none", "light": "none" },
-    "backgroundElement": { "dark": "none", "light": "none" },
-
-    "border": { "dark": "sumiInk4", "light": "springViolet1" },
-    "borderActive": { "dark": "waveBlue2", "light": "waveBlue2" },
-    "borderSubtle": { "dark": "sumiInk3", "light": "springViolet1" },
-
-    "diffAdded": { "dark": "autumnGreen", "light": "autumnGreen" },
-    "diffRemoved": { "dark": "autumnRed", "light": "autumnRed" },
-    "diffContext": { "dark": "muted", "light": "muted" },
-    "diffHunkHeader": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "diffHighlightAdded": { "dark": "autumnGreen", "light": "autumnGreen" },
-    "diffHighlightRemoved": { "dark": "autumnRed", "light": "autumnRed" },
-    "diffAddedBg": { "dark": "none", "light": "none" },
-    "diffRemovedBg": { "dark": "none", "light": "none" },
-    "diffContextBg": { "dark": "none", "light": "none" },
-    "diffLineNumber": { "dark": "muted", "light": "muted" },
-    "diffAddedLineNumberBg": { "dark": "none", "light": "none" },
-    "diffRemovedLineNumberBg": { "dark": "none", "light": "none" },
-
-    "markdownText": { "dark": "fujiWhite", "light": "sumiInk3" },
-    "markdownHeading": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "markdownLink": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "markdownLinkText": { "dark": "oldWhite", "light": "boatYellow2" },
-    "markdownCode": { "dark": "autumnGreen", "light": "autumnGreen" },
-    "markdownBlockQuote": { "dark": "muted", "light": "muted" },
-    "markdownEmph": { "dark": "oniViolet", "light": "oniViolet" },
-    "markdownStrong": { "dark": "oldWhite", "light": "boatYellow2" },
-    "markdownHorizontalRule": { "dark": "sumiInk4", "light": "springViolet1" },
-    "markdownListItem": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "markdownListEnumeration": { "dark": "oldWhite", "light": "boatYellow2" },
-    "markdownImage": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "markdownImageText": { "dark": "oldWhite", "light": "boatYellow2" },
-    "markdownCodeBlock": { "dark": "fujiWhite", "light": "sumiInk3" },
-
-    "syntaxComment": { "dark": "muted", "light": "springViolet1" },
-    "syntaxKeyword": { "dark": "oniViolet", "light": "oniViolet" },
-    "syntaxFunction": { "dark": "crystalBlue", "light": "waveBlue2" },
-    "syntaxVariable": { "dark": "fujiWhite", "light": "sumiInk3" },
-    "syntaxString": { "dark": "autumnGreen", "light": "autumnGreen" },
-    "syntaxNumber": { "dark": "boatYellow2", "light": "boatYellow2" },
-    "syntaxType": { "dark": "oldWhite", "light": "boatYellow2" },
-    "syntaxOperator": { "dark": "springViolet1", "light": "springViolet1" },
-    "syntaxPunctuation": { "dark": "fujiWhite", "light": "sumiInk3" }
+  "dark": {
+    "hue": {
+      "gray": {
+        "100": "#E6E4DC",
+        "200": "#C5C9C5",
+        "300": "#B4B2A8",
+        "400": "#9E9B93",
+        "500": "#625E5A",
+        "600": "#393836",
+        "700": "#282727",
+        "800": "#181616",
+        "900": "#0D0C0C"
+      },
+      "red": {
+        "100": "#F2949B",
+        "200": "#E46876",
+        "300": "#C4746E",
+        "400": "#A35A56",
+        "500": "#81443F",
+        "600": "#62312E",
+        "700": "#451F1E",
+        "800": "#2C1212",
+        "900": "#190909"
+      },
+      "orange": {
+        "100": "#DCC0AD",
+        "200": "#B6927B",
+        "300": "#9A7A66",
+        "400": "#7F6352",
+        "500": "#654D40",
+        "600": "#4D3A30",
+        "700": "#392A23",
+        "800": "#251A16",
+        "900": "#140E0B"
+      },
+      "green": {
+        "100": "#B4D58F",
+        "200": "#87A987",
+        "300": "#738F73",
+        "400": "#5F765F",
+        "500": "#4B5D4B",
+        "600": "#3A483A",
+        "700": "#2A352A",
+        "800": "#1B231B",
+        "900": "#0E130E"
+      },
+      "cyan": {
+        "100": "#B0C4C2",
+        "200": "#8EA4A2",
+        "300": "#788C8A",
+        "400": "#627472",
+        "500": "#4E5D5C",
+        "600": "#3D4948",
+        "700": "#2D3636",
+        "800": "#1D2323",
+        "900": "#0F1212"
+      },
+      "blue": {
+        "100": "#A3B8E8",
+        "200": "#7E9CD8",
+        "300": "#6A86BB",
+        "400": "#57709B",
+        "500": "#455A7D",
+        "600": "#344460",
+        "700": "#253145",
+        "800": "#171E2B",
+        "900": "#0B0F16"
+      },
+      "purple": {
+        "100": "#B5A6D0",
+        "200": "#957FB8",
+        "300": "#8470A3",
+        "400": "#6F5D8A",
+        "500": "#5A4A70",
+        "600": "#453958",
+        "700": "#322A40",
+        "800": "#201A2B",
+        "900": "#110E17"
+      },
+      "accent": "$hue.purple",
+      "interactive": "$hue.blue",
+      "neutral": "$hue.gray"
+    }
   }
 }

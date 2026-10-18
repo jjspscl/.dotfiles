@@ -9,7 +9,8 @@ Personal dotfiles managed with [Tuckr](https://github.com/RaphGL/Tuckr).
 | `zshrc` | `.zshrc` | Zsh + Oh My Zsh, Volta, Bun, mise, OpenClaw completions |
 | `tmux` | `.tmux.conf` | tmux with TPM, vim keys, Kanagawa theme, minimal-tmux-status, tmux-sm |
 | `nvim` | `.config/nvim/` | Kickstart-based Neovim — Kanagawa Dragon, lazy.nvim, LSP, DAP, Copilot |
-| `opencode` | `.config/opencode/` | OpenCode 5-agent config, Kanagawa transparent theme |
+| `opencode` | `.config/opencode/` | OpenCode 5-agent config, `cli.json`, Kanagawa V2 theme (tinted panels) |
+| `wezterm` | `.config/wezterm/` | WezTerm (Windows host) — Kanagawa Dragon, near-solid opacity, `Ctrl+Alt+O` opacity cycle |
 
 ## 🎨 Theme
 
@@ -19,7 +20,8 @@ Everything uses a unified **Kanagawa** color palette:
 |---------|-------|
 | Neovim | kanagawa-dragon (transparent) |
 | tmux | Kanagawa via minimal-tmux-status |
-| OpenCode | kanagawa-transparent |
+| OpenCode | kanagawa-transparent (opencode 2 theme format) |
+| WezTerm | Kanagawa Dragon colors, opacity 0.96 |
 
 ## 🚀 Setup
 
@@ -58,6 +60,16 @@ nvim
 # lazy.nvim auto-installs on first run
 # Then run :Mason to verify LSP servers
 ```
+
+### WezTerm (Windows host)
+
+WezTerm runs on Windows, so its config is **copied** (not symlinked) from the repo:
+
+```bash
+./scripts/sync-wezterm.sh   # re-run after editing Configs/wezterm/...
+```
+
+`install-linux.sh` does this automatically under WSL.
 
 ### Post-Install
 
@@ -106,9 +118,12 @@ tuckr status
 │   │           ├── gitsigns.lua
 │   │           ├── indent_line.lua
 │   │           └── neo-tree.lua
+│   ├── wezterm/
+│   │   └── .config/wezterm/wezterm.lua
 │   └── opencode/
 │       └── .config/opencode/
 │           ├── opencode.json
+│           ├── cli.json
 │           ├── tui.json
 │           ├── themes/kanagawa-transparent.json
 │           └── skills/tamagui.md
@@ -117,6 +132,8 @@ tuckr status
 │   │   └── pre.sh          # Installs TPM
 │   └── zshrc/
 │       └── pre.sh          # Installs zsh-autosuggestions + Volta
+├── scripts/
+│   └── sync-wezterm.sh      # Copies WezTerm config to the Windows profile
 ├── install-linux.sh         # Base packages, Rust, Tuckr
 └── README.md
 ```
